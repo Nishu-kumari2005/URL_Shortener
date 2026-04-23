@@ -12,7 +12,12 @@ async function handlegenerateNewShortURL(req, res) {
     visitHistory: [],
   });
 
-  return res.render("home", {
+  // Enforce a maximum of 10 URLs in the database
+  const latestUrls = await URL.find({}).sort({ createdAt: -1 }).limit(10);
+  const latestIds = latestUrls.map(url => url._id);
+  await URL.deleteMany({ _id: { $nin: latestIds } });
+
+  return res.json({
     id: shortID,
   });
 }

@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require('path');
+const cors = require('cors');
 const { connectToMongoDB } = require("./connect");
 const cookieParser = require('cookie-parser'); 
 const {restrictToLoggedinUserOnly} = require("./middlewares/auth"); 
@@ -16,16 +17,19 @@ connectToMongoDB("mongodb://localhost:27017/short-url").then(() =>
   console.log("Mongodb connected")
 );
 
-app.set("view engine", "ejs");
-app.set('views', path.resolve("./views")); 
+
+app.use(cors({
+  origin: 'http://localhost:5173', // Vite dev server
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use("/url", urlRoute);
-app.use('/', staticRouter);
-app.use('/user', restrictToLoggedinUserOnly, userRoute);
+app.use("/url" , restrictToLoggedinUserOnly, urlRoute);
+app.use('/api', staticRouter);
+app.use('/user',  userRoute);
 
 app.get('/url/:shortId', async (req, res) => {
   const shortId = req.params.shortId;

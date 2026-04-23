@@ -20,4 +20,4 @@ This application converts long URLs into short, shareable links and tracks the n
 - Authentication: JWT
 - Styling: CSS / Tailwind CSS
 
-<img width="1879" height="915" alt="image" src="https://github.com/user-attachments/assets/a5cd4216-9c7e-44b5-88f8-b09ebbb4ec2f" />
+<img width="1851" height="943" alt="Screenshot 2026-04-24 022600" src="https://github.com/user-attachments/assets/1d443f85-b9eb-41d2-bd0c-f132d67afca8" />
